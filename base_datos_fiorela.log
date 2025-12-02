@@ -1,0 +1,611 @@
+----------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\base_datos_fiorela.log
+  log type:  text
+ opened on:   1 Dec 2025, 19:01:49
+
+. do "C:\Users\CI-EPG~1\AppData\Local\Temp\STD48d4_000000.tmp"
+
+. clear all
+
+. set more off
+
+. **2024 - Fiorela Cahuana Flores
+. *************************************
+. ******DIRECTORIOS DE TRABAJO ********
+. *************************************
+. glo enaho_bas   "C:\Users\CI-EPG-THONY\OneDrive\ENAHO\001 BASES"
+
+. glo mod01               "$enaho_bas\001 modulo 01"
+
+. glo mod02               "$enaho_bas\002 modulo 02"
+
+. glo mod03               "$enaho_bas\003 modulo 03"
+
+. glo mod04               "$enaho_bas\004 modulo 04"      
+
+. glo mod05               "$enaho_bas\005 modulo 05"
+
+. glo sumr                "$enaho_bas\034 sumarias"
+
+. glo fiorela_tes "C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela"
+
+. glo tempo               "$fiorela_tes\002 BASE DE DATOS\001 TEMP"
+
+. glo dclea               "$fiorela_tes\002 BASE DE DATOS\002 CLEAN"
+
+. glo dofil               "$fiorela_tes\001 DOFILES"
+
+. 
+. cd "$enaho_bas"
+C:\Users\CI-EPG-THONY\OneDrive\ENAHO\001 BASES
+
+. 
+. **# Bookmark #1
+. *========================
+. * Modulo 03 (Educacion)
+. *========================
+. 
+. use "$mod03/enaho01a-2024-300.dta" , clear
+
+. 
+. /*VARIABLES A SELECCIONAR:
+> --> años de educacion
+> */
+. **Manter solo JEFES de hogar
+. keep if p203==1 
+(72,928 observations deleted)
+
+.         
+. * Mantener a las personas que formaron parte del hogar durante todo el período
+. drop if p204==2
+(0 observations deleted)
+
+. 
+. * Escolaridad alcanzada (años)
+. gen sch =.
+(33,691 missing values generated)
+
+. replace sch =0  if p301a ==1 | p301a ==2                                                                      
+>                               // Sin nivel ni nivel inicial
+(1,875 real changes made)
+
+. replace sch =0  if p301a ==3 & (p301b ==0 & p301c ==0)                                                        
+>                                                                       // Nivel Inicial
+(393 real changes made)
+
+. replace sch =1  if (p301a ==3 & p301b ==1) | (p301a ==3 & p301c ==1) | (p301a ==4 & p301b ==1) | (p301a ==4 & 
+> p301c ==1)     // 1 years  
+(905 real changes made)
+
+. replace sch =2  if (p301a ==3 & p301b ==2) | (p301a ==3 & p301c ==2) | (p301a ==4 & p301b ==2) | (p301a ==4 & 
+> p301c ==2)     // 2 years 
+(1,252 real changes made)
+
+. replace sch =3  if (p301a ==3 & p301b ==3) | (p301a ==3 & p301c ==3) | (p301a ==4 & p301b ==3) | (p301a ==4 & 
+> p301c ==3)     // 3 years 
+(1,483 real changes made)
+
+. replace sch =4  if (p301a ==3 & p301b ==4) | (p301a ==3 & p301c ==4) | (p301a ==4 & p301b ==4) | (p301a ==4 & 
+> p301c ==4)     // 4 years 
+(948 real changes made)
+
+. replace sch =5  if (p301a ==3 & p301b ==5) | (p301a ==3 & p301c ==5) | (p301a ==4 & p301b ==5) | (p301a ==4 & 
+> p301c ==5)     // 5 years 
+(2,687 real changes made)
+
+. replace sch =6  if (p301a ==3 & p301b ==6) | (p301a ==3 & p301c ==6) | (p301a ==4 & p301b ==6) | (p301a ==4 & 
+> p301c ==6)     // 6 years 
+(2,830 real changes made)
+
+. replace sch =7  if (p301a ==5 & p301b ==1) | (p301a ==6 & p301b ==1)                                          
+>            // 7 years 
+(852 real changes made)
+
+. replace sch =8  if (p301a ==5 & p301b ==2) | (p301a ==6 & p301b ==2)                                          
+>                                                   // 8 years 
+(1,211 real changes made)
+
+. replace sch =9  if (p301a ==5 & p301b ==3) | (p301a ==6 & p301b ==3)                                          
+>                                                       // 9 years 
+(1,306 real changes made)
+
+. replace sch =10 if (p301a ==5 & p301b ==4) | (p301a ==6 & p301b ==4)                                          
+>                                                       // 10 years 
+(611 real changes made)
+
+. replace sch =11 if (p301a ==5 & p301b ==5) | (p301a ==6 & p301b ==5)                                          
+>                                                       // 11 years 
+(8,766 real changes made)
+
+. replace sch =12 if (p301a ==6 & p301b ==6)                                                                    
+>                                                                                   // Nivel Secundaria
+(0 real changes made)
+
+. replace sch =12 if (p301a ==7 & p301b ==1) | (p301a ==8 & p301b ==1) | (p301a ==9 & p301b ==1) | (p301a ==10 &
+>  p301b ==1)   // 12 years 
+(819 real changes made)
+
+. replace sch =13 if (p301a ==7 & p301b ==2) | (p301a ==8 & p301b ==2) | (p301a ==9 & p301b ==2) | (p301a ==10 &
+>  p301b ==2)   // 13 years 
+(765 real changes made)
+
+. replace sch =14 if (p301a ==7 & p301b ==3) | (p301a ==8 & p301b ==3) | (p301a ==9 & p301b ==3) | (p301a ==10 &
+>  p301b ==3)   // 14 years 
+(2,739 real changes made)
+
+. replace sch =15 if (p301a ==7 & p301b ==4) | (p301a ==8 & p301b ==4) | (p301a ==9 & p301b ==4) | (p301a ==10 &
+>  p301b ==4)   // 15 years 
+(305 real changes made)
+
+. replace sch =16 if (p301a ==7 & p301b ==5) | (p301a ==8 & p301b ==5) | (p301a ==9 & p301b ==5) | (p301a ==10 &
+>  p301b ==5)   // 16 years 
+(2,875 real changes made)
+
+. replace sch =17 if (p301a ==9 & p301b ==6) | (p301a ==10 & p301b ==6) | (p301a ==11 & p301b ==1)        // 18 
+> years 
+(371 real changes made)
+
+. replace sch =18 if (p301a ==9 & p301b ==7) | (p301a ==10 & p301b ==7) | (p301a ==11 & p301b ==2)        // 18 
+> years 
+(624 real changes made)
+
+. label variable sch  "Años de escolaridad"
+
+. 
+. label data "Modulo: EDUCACION - ENAHO "
+
+. 
+. keep conglome vivienda hogar codperso ubigeo dominio estrato  sch
+
+. 
+. 
+. save "$dclea/mod300_2024_fiorela.dta" , replace
+file C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\002 BASE DE DATOS\002 CLEAN/mod300_2024_fiorela.dta saved
+
+. 
+. **# Bookmark #2
+. *=====================
+. * Module 500 (Employment)
+. *=====================
+. 
+. use "$mod05/enaho01a-2024-500.dta" , clear
+
+. **Manter solo JEFES de hogar
+. keep if p203==1
+(52,301 observations deleted)
+
+. 
+. * Keep people who were part of the household for the entire period
+. drop if p204==2 
+(0 observations deleted)
+
+. 
+. ***ACTIVOS EMPRESARIALES
+. gen act_empr =(p5571a ==1 | p5572a ==1 | p5573a ==1 | p5574a ==1 | p5575a ==1 | p5576a ==1 | p5577a ==1 | p557
+> 8a ==1)
+
+. label variable act_empr  "Posee activos empresariales"
+
+. label define act_empr 1"Si" 0"No"
+
+. label values act_empr  act_empr 
+
+. 
+. 
+. keep conglome vivienda hogar codperso ubigeo dominio estrato   act_empr    fac*  ocu500 
+
+. 
+. label data "Modulo: EMPELO E INGRESOS - ENAHO Panel"
+
+. save "$dclea/mod500_2024_fiorela.dta" , replace
+file C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\002 BASE DE DATOS\002 CLEAN/mod500_2024_fiorela.dta saved
+
+. 
+. **# Bookmark #3
+. *=====================
+. * Module 100 (VIVIENDA)
+. *=====================
+. 
+. use "$mod01/enaho01a-2024-100.dta" , clear
+
+. gen year = 2024
+
+. 
+. * : internet
+. gen internet = (p1144==1)
+
+. 
+.         * Area
+. recode estrato (1/5=1 "Urbano") (6/8=0 "Rural"), gen(urban ) 
+(36,577 differences between estrato and urban)
+
+.         label variable urban  "Urbano"
+
+. 
+. * Zone
+. recode dominio  (1/3=1 "Coast") (4/6=2 "Highlands") (7/7=3 "Jungle") (8/8=4 "Lima Metropolis"), gen(zone )
+(38,878 differences between dominio and zone)
+
+.         label var zone "Zone "
+
+.  drop if nbi1==.
+(11,040 observations deleted)
+
+. 
+.  
+. keep conglome vivienda hogar ubigeo dominio estrato    interne    urban  zone nbi*  fac*
+
+. 
+. label data "Modulo: CARACTERISTICAS DE LA VIVIENDA Y DEL HOGAR - ENAHO Panel"
+
+. save "$dclea/mod100_2024_fiorela.dta" , replace
+file C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\002 BASE DE DATOS\002 CLEAN/mod100_2024_fiorela.dta saved
+
+. 
+. **# Bookmark #5
+. *========================
+. * Modulo 1479 (MIEMBROS del HOGAR)
+. *========================
+. use "$mod02/enaho01-2024-200.dta" , clear
+
+. gen year = 2024
+
+. **Manter solo JEFES de hogar
+. keep if p203==1
+(84,030 observations deleted)
+
+.         
+. * Mantener a las personas que formaron parte del hogar durante todo el período
+. drop if p204==2 
+(0 observations deleted)
+
+. 
+. ***DISCRIMINACION Y EXCLUSION SOCIAL
+. 
+. * Sexo
+. recode p207  (2=1 "Mujer") (1=0 "Varón"), gen(sex )
+(33,691 differences between p207 and sex)
+
+. label variable sex  "Sexo del jefe del hogar_mujer"
+
+. 
+. * Edad en años
+. gen age = p208a  
+
+. label variable age  "Edad en (años cumplidos) "
+
+. 
+. *Estado civil
+. 
+. recode p209  (6=1 "Soltero/a") (1=2 "Casado/a o Conviviente") (2=2 "Casado/a o Conviviente") (4=3 "Separado/a 
+> o Divorciado") (5=3 "Separado/a o Divorciado") (3=4 "Viudo") , gen (ecivil )
+(23,343 differences between p209 and ecivil)
+
+.         lab var ecivil  "Estado Civil"
+
+.         
+. keep conglome vivienda hogar codperso ubigeo dominio estrato  ecivil  sex  age   fac*  year
+
+. 
+. label data "Modulo: CARACTERISTICAS DE MIEMBROS DEL HOGAR - ENAHO"
+
+. save "$dclea/mod200_2024_fiorela.dta" , replace
+file C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\002 BASE DE DATOS\002 CLEAN/mod200_2024_fiorela.dta saved
+
+.  
+. **# Bookmark #6
+. *========================
+. * Modulo 400 (SALUD)
+. *========================
+. use "$mod04/enaho01a-2024-400.dta" , clear
+
+. 
+. **Manter solo JEFES de hogar
+. keep if p203==1
+(76,760 observations deleted)
+
+.         
+. * Mantener a las personas que formaron parte del hogar durante todo el período
+. drop if p204==2
+(0 observations deleted)
+
+. 
+. **Enfermedad cronica
+. gen croni  =(p401 ==1)
+
+.         lab var croni   "Presenta alguna enfermedad Crónica"
+
+.         label val croni   yesno
+
+.                 
+. *MORBILIDAD
+. gen morbilid  =(p40314 ==0 | p4025 ==0)
+
+. replace morbilid =. if p4025 ==.
+(3 real changes made, 3 to missing)
+
+.         lab var morbilid  "Morbilidad"
+
+.         lab val morbilid  yesno
+
+.         
+. 
+.         keep conglome vivienda hogar codperso ubigeo dominio estrato     croni morbilid   fac* 
+
+. 
+.         label data "Modulo: SALUD - ENAHO"
+
+. save "$dclea/mod400_2024_fiorela.dta" , replace
+file C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\002 BASE DE DATOS\002 CLEAN/mod400_2024_fiorela.dta saved
+
+. 
+. 
+. 
+. **# CONSTRUCCION DATA - NBI #1
+. ****
+. *Bajamos los archivos zipeados del modulo 100 y sumaria de la pagina del INEI
+. 
+. *Descomprimir los archivos del modulo 100 y sumaria "Manualmente"
+. 
+. use "$sumr\sumaria-2024.dta", clear
+
+. 
+. gen    facpob=factor07*mieperho
+
+. 
+. *Establecemos las caracteristicas de la encuesta 
+. *usando las variable factor de expansion, conglomerado y estrato
+. svyset [pweight=facpob], psu(conglome) strata(estrato)
+
+Sampling weights: facpob
+             VCE: linearized
+     Single unit: missing
+        Strata 1: estrato
+ Sampling unit 1: conglome
+           FPC 1: <zero>
+
+. 
+. **# pobreza monetaria #1
+. 
+. *Estimamos el gasto promedio mensual de los hogares en términos per capita (indicador de bienestar)
+. gen gpcm=gashog2d/(mieperho*12)
+
+. 
+. *Contrastamos gpm con la linea de pobreza alimentaria (linpe) y pobreza total (linea)
+. 
+. gen pobre3=1 if gpcm < linpe
+(32,103 missing values generated)
+
+. replace pobre3=2 if gpcm >= linpe & gpcm < linea
+(5,224 real changes made)
+
+. replace pobre3=3 if gpcm >= linea
+(26,879 real changes made)
+
+. 
+. *etiquetamos los valores de la variable
+. 
+. label define paz 1 "pobre_extremo" 2 "pobre_no_extremo" 3 "no_pobre"
+
+. label value pobre3 paz
+
+. label var pobre3 "Pobreza Monetaria"
+
+. 
+. gen pobre2=1 if gpcm < linea
+(26,879 missing values generated)
+
+. replace pobre2=0 if gpcm >= linea
+(26,879 real changes made)
+
+. *Etiquetamos los valores de la variable
+. 
+. label define pobre2 1"pobre" 0"no_pobre"
+
+. label value pobre2 pobre2
+
+. label var pobre2 "Pobreza Monetaria"
+
+. 
+. gen year_2=2024
+
+. 
+. save "$tempo\pobreza_2024_fiorela.dta" , replace
+file C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\002 BASE DE DATOS\001 TEMP\pobreza_2024_fiorela.dta saved
+
+. 
+. ***JUNTANDO LAS BASES DE DATOS:
+. 
+. use "$dclea/mod200_2024_fiorela.dta", clear
+(Modulo: CARACTERISTICAS DE MIEMBROS DEL HOGAR - ENAHO)
+
+. merge 1:1  conglome vivienda hogar codperso ubigeo dominio estrato using "$dclea/mod300_2024_fiorela.dta", nog
+> en 
+(label dominio already defined)
+(label estrato already defined)
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                             0
+    Matched                            33,691  
+    -----------------------------------------
+
+. merge 1:1  conglome vivienda hogar codperso ubigeo dominio estrato using "$dclea/mod400_2024_fiorela.dta", nog
+> en 
+(label dominio already defined)
+(label estrato already defined)
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                             0
+    Matched                            33,691  
+    -----------------------------------------
+
+. merge 1:1  conglome vivienda hogar codperso ubigeo dominio estrato using "$dclea/mod500_2024_fiorela.dta", nog
+> en 
+(label dominio already defined)
+(label estrato already defined)
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                             0
+    Matched                            33,691  
+    -----------------------------------------
+
+. merge 1:1  conglome vivienda hogar ubigeo dominio estrato using "$dclea/mod100_2024_fiorela.dta", nogen 
+(label dominio already defined)
+(label estrato already defined)
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                             0
+    Matched                            33,691  
+    -----------------------------------------
+
+. merge 1:1  conglome vivienda hogar ubigeo dominio estrato using "$tempo\pobreza_2024_fiorela.dta", nogen 
+(label dominio already defined)
+(label estrato already defined)
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                             0
+    Matched                            33,691  
+    -----------------------------------------
+
+. 
+. ***POBRE2 ES POBREZA MONETARIA
+. rename pobre2 pob_monetaria
+
+.         lab var pob_monetaria "Pobreza Monetaria"
+
+.         lab def pob_monetaria 1"Pobre monetario" 0"No pobre monetario"
+
+. 
+. keep conglome vivienda hogar codperso ubigeo dominio estrato  facpob07 year sex age ecivil mes   factor07 sch 
+> croni morbilid ocu500 fac500a act_empr nbi1 nbi2 nbi3 nbi4 nbi5 internet urban zone mieperho totmieho percepho
+>  ingbruhd ingnethd ingmo1hd ingmo2hd inghog1d inghog2d gashog1d gashog2d estrsocial linpe linea pobreza lineav
+>  pobrezav facpob gpcm pobre3 pob_monetaria year_2
+
+.          
+.         
+.         
+. save "$dclea/modpersonal_2024_fiorela.dta" , replace
+file C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\002 BASE DE DATOS\002 CLEAN/modpersonal_2024_fiorela.dta
+    saved
+
+. 
+. 
+. 
+. 
+. use "$dclea/modpersonal_2024_fiorela.dta" , clear
+(Modulo: CARACTERISTICAS DE MIEMBROS DEL HOGAR - ENAHO)
+
+. 
+. clear all
+
+. cd "C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\002 BASE DE DATOS\002 CLEAN"
+C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\002 BASE DE DATOS\002 CLEAN
+
+. 
+. dir "modpersonal*"
+5795.5k  12/01/25 19:01  modpersonal_2024_fiorela.dta
+
+. 
+. unicode encoding set cp1252
+  (default encoding now cp1252)
+
+. unicode translate "mod*", transutf8 
+  (using cp1252 encoding)
+  (Directory ./bak.stunicode created; please do not delete)
+
+  File summary (before starting):
+        6  file(s) specified
+        6  file(s) to be examined ...
+
+  File mod100_2024_fiorela.dta (Stata dataset)
+      all variable names translated
+      all data labels translated
+      all variable labels translated
+      all value-label names translated
+      all value-label contents translated
+      all str# variables translated
+          ------------------------------------------------------------------------------------------------------
+          File successfully translated
+
+  File mod200_2024_fiorela.dta (Stata dataset)
+      all variable names translated
+      all data labels translated
+      all variable labels translated
+      all value-label names translated
+      all value-label contents translated
+      all str# variables translated
+          ------------------------------------------------------------------------------------------------------
+          File successfully translated
+
+  File mod300_2024_fiorela.dta (Stata dataset)
+      all variable names translated
+      all data labels translated
+      all variable labels translated
+      all value-label names translated
+      all value-label contents translated
+      all str# variables translated
+          ------------------------------------------------------------------------------------------------------
+          File successfully translated
+
+  File mod400_2024_fiorela.dta (Stata dataset)
+      all variable names translated
+      all data labels translated
+      all variable labels translated
+      all value-label names translated
+      all value-label contents translated
+      all str# variables translated
+          ------------------------------------------------------------------------------------------------------
+          File successfully translated
+
+  File mod500_2024_fiorela.dta (Stata dataset)
+      all variable names translated
+      all data labels translated
+      all variable labels translated
+      all value-label names translated
+      all value-label contents translated
+      all str# variables translated
+          ------------------------------------------------------------------------------------------------------
+          File successfully translated
+
+  File modpersonal_2024_fiorela.dta (Stata dataset)
+      all variable names translated
+      all data labels translated
+      all variable labels translated
+      all value-label names translated
+      all value-label contents translated
+      all characteristic names translated
+      all characteristic contents translated
+      all str# variables translated
+          ------------------------------------------------------------------------------------------------------
+          File successfully translated
+
+  File summary:
+      all files successfully translated
+
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+end of do-file
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\CI-EPG-THONY\OneDrive\tess_fiorela\base_datos_fiorela.log
+  log type:  text
+ closed on:   1 Dec 2025, 19:02:01
+----------------------------------------------------------------------------------------------------------------
